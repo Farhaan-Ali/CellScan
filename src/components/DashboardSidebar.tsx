@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link, useNavigate, useLocation } from "react-router-dom";
@@ -14,7 +13,8 @@ import {
   ChevronLeft,
   ChevronRight,
   Activity,
-  Clipboard
+  Clipboard,
+  Stethoscope
 } from "lucide-react";
 
 interface DashboardSidebarProps {
@@ -52,6 +52,7 @@ const DashboardSidebar = ({ isCollapsed, setIsCollapsed }: DashboardSidebarProps
     { icon: Home, label: "Dashboard", path: "/dashboard" },
     { icon: Activity, label: "Scans", path: "/scans" },
     { icon: FileText, label: "Reports", path: "/reports" },
+    { icon: Stethoscope, label: "Risk Assessment", path: "/risk-assessment" },
     { icon: Clipboard, label: "Quiz", path: "/quiz" },
     { icon: User, label: "Profile", path: "/profile" },
     { icon: Settings, label: "Settings", path: "/settings" },

@@ -1,11 +1,10 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
-import ParticleBackground from "./components/ParticleBackground";
+import P5ParticleBackground from "./components/P5ParticleBackground";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
@@ -18,8 +17,10 @@ import Settings from "./pages/Settings";
 import Help from "./pages/Help";
 import ScanDetails from "./pages/ScanDetails";
 import Quiz from "./pages/Quiz";
+import RiskAssessment from "./pages/RiskAssessment";
 import ProtectedRoute from "./components/ProtectedRoute";
 import LoadingScreen from "./components/LoadingScreen";
+import P5Demo from "./pages/P5Demo";
 
 const queryClient = new QueryClient();
 
@@ -43,7 +44,7 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <TooltipProvider>
-          <ParticleBackground />
+          <P5ParticleBackground/>
           <Toaster />
           <Sonner />
           <Routes>
@@ -85,6 +86,12 @@ const App = () => {
                 <Quiz />
               </ProtectedRoute>
             } />
+            <Route path="/risk-assessment" element={
+              <ProtectedRoute>
+                <RiskAssessment />
+              </ProtectedRoute>
+            } />
+            <Route path="/p5-demo" element={<P5Demo />} />
             <Route path="/scan-details/:scanId" element={
               <ProtectedRoute>
                 <ScanDetails />

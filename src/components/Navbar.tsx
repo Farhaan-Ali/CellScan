@@ -1,19 +1,47 @@
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Menu, X, UserCircle } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const location = useLocation();
-  const isLoggedIn = localStorage.getItem("user") !== null;
+
+  useEffect(() => {
+    // Check auth status when component mounts and on location change
+    const checkAuthStatus = async () => {
+      try {
+        const { data } = await supabase.auth.getSession();
+        setIsLoggedIn(!!data.session);
+      } catch (error) {
+        console.error("Auth check error in Navbar:", error);
+        setIsLoggedIn(false);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    checkAuthStatus();
+
+    // Set up auth state listener
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      setIsLoggedIn(!!session);
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [location.pathname]);
 
   const links = [
     { name: "Home", path: "/" },
     { name: "About", path: "/#about" },
     { name: "Features", path: "/#features" },
     { name: "How It Works", path: "/#how-it-works" },
+    { name: "P5 Demo", path: "/p5-demo" },
   ];
 
   const variants = {
@@ -57,7 +85,9 @@ const Navbar = () => {
             </ul>
 
             <div className="flex items-center space-x-3">
-              {isLoggedIn ? (
+              {isLoading ? (
+                <div className="w-24 h-10 animate-pulse bg-gray-100 rounded-lg"></div>
+              ) : isLoggedIn ? (
                 <div className="flex space-x-3">
                   <Link to="/quiz">
                     <motion.button
@@ -143,7 +173,9 @@ const Navbar = () => {
             </ul>
 
             <div className="flex flex-col space-y-3 mt-auto mb-10">
-              {isLoggedIn ? (
+              {isLoading ? (
+                <div className="w-full h-10 animate-pulse bg-gray-100 rounded-lg"></div>
+              ) : isLoggedIn ? (
                 <>
                   <Link
                     to="/quiz"

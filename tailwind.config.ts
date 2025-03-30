@@ -101,9 +101,8 @@ export default {
 					'50%': { transform: 'translateY(-10px)' },
 				},
 				'scan': {
-					'0%': { transform: 'translateY(0)', opacity: '0.5' },
-					'50%': { transform: 'translateY(100%)', opacity: '1' },
-					'100%': { transform: 'translateY(0)', opacity: '0.5' },
+					'0%': { transform: 'translateY(-100%)' },
+          '100%': { transform: 'translateY(100%)' },
 				},
 				'bounce-light': {
 					'0%, 100%': { 
@@ -138,7 +137,8 @@ export default {
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'pulse-glow': 'pulse-glow 2s infinite',
 				'float': 'float 3s ease-in-out infinite',
-				'scan': 'scan 2s ease-in-out infinite',
+				'scan': 'scan 2s infinite linear',
+
 				'bounce-light': 'bounce-light 2s ease-in-out infinite',
 				'rotate-slow': 'rotate-slow 8s linear infinite',
 				'border-glow': 'border-glow 2s infinite',
